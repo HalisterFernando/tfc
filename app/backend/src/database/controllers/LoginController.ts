@@ -16,4 +16,13 @@ export default class LoginController {
     const token = JwtService.sign({ email: user.email });
     return res.status(StatusCodes.OK).json({ token });
   };
+
+  validate = async (req: Request, res: Response) => {
+    const { authorization: token } = req.headers;
+    if (token) {
+      const { role } = await this.loginService.validate(token);
+
+      res.status(StatusCodes.OK).json({ role });
+    }
+  };
 }
