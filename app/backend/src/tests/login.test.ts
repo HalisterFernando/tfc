@@ -4,14 +4,10 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import Example from '../database/models/ExampleModel';
-
 import { Response } from 'superagent';
 import IUser from '../database/interfaces/IUser';
 import User from '../database/models/user';
-import LoginController from '../database/controllers/LoginController';
-import errorMiddleware from '../database/middleware/error';
-import { request } from 'http';
+
 
 chai.use(chaiHttp);
 
@@ -29,10 +25,6 @@ const userMock: IUser = {
 const loginBodyMock = {
   email: 'mail@mail.com',
   password: 'any-password'
-}
-
-class ErrorMock extends Error {
-  name = 'Error'
 }
 
 describe('/login', () => {
