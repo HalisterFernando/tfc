@@ -44,14 +44,14 @@ describe('/teams', () => {
 
 // describe('/teams/:id', () => {
 //     beforeEach(() => {
-//         sinon.stub(Team, 'findByPk').resolves(teamIdMock as unknown as Team)
+//         sinon.stub(Team, 'findByPk').resolves(teamMock as Team)
 //     });
 //     afterEach(() => {
 //         sinon.restore();
 //     });
 //     it.only('shoud return status 200', async () => {
-//        const response = await chai.request(app).get('/teams/0');
-//        console.log(response)
+//        const response = await chai.request(app).get('/teams/2');
+       
         
 //         expect(response.status).to.equal(200);
 //     })
