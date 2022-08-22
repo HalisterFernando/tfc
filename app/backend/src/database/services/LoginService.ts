@@ -40,7 +40,7 @@ export default class LoginService implements ILoginService {
     const { email } = await this.verifyToken(token) as JwtPayload;
 
     const user = await User.findOne({
-      where: { email }, attributes: ['token'],
+      where: { email }, attributes: { exclude: ['id', 'username', 'password', 'email'] },
     });
     return user as IUser;
   }

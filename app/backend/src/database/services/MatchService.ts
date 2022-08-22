@@ -3,7 +3,8 @@ import Match from '../models/match';
 import Team from '../models/team';
 
 export interface IMatchService {
-  list(): Promise<IMatch>
+  list(): Promise<IMatch[]>
+  onGoingMatches(inProgress: boolean): Promise<IMatch[]>
 }
 
 export default class MatchService implements IMatchService {
@@ -24,8 +25,30 @@ export default class MatchService implements IMatchService {
     return matches;
   };
 
-  async list(): Promise<IMatch> {
+  private getOnGoinMatches = async (inProgress: boolean): Promise<IMatch[]> => {
+    const matches = await Match.findAll({
+      include: [{
+        model: Team,
+        as: 'teamHome',
+        attributes: ['teamName'],
+
+      }, {
+        model: Team,
+        as: 'teamAway',
+        attributes: ['teamName'],
+      }],
+      where: { inProgress },
+    });
+    return matches;
+  };
+
+  async list(): Promise<IMatch[]> {
     const matches = this.getAll();
-    return matches as unknown as IMatch;
+    return matches;
+  }
+
+  async onGoingMatches(inProgress: boolean): Promise<IMatch[]> {
+    const matches = this.getOnGoinMatches(inProgress);
+    return matches;
   }
 }

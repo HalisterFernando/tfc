@@ -9,6 +9,6 @@ const matchController = new MatchController(matchService);
 const router = Router();
 
 router.get('/', matchController.list);
-// router.get('/:id', teamController.getById);
+// router.get('/inProgress', matchController.onGoingMatches);
 
 export default router;
