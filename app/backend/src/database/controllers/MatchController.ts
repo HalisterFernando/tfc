@@ -17,8 +17,15 @@ export default class TeamController {
   };
 
   create = async (req: Request, res: Response) => {
-    const newMatch = await this.matchService.create(req.body);
-    return res.status(StatusCodes.CREATED).json(newMatch);
+    const { homeTeam, awayTeam } = req.body;
+
+    if (homeTeam !== awayTeam) {
+      const newMatch = await this.matchService.create(req.body);
+      return res.status(StatusCodes.CREATED).json(newMatch);
+    }
+    const err = new Error('It is not possible to create a match with two equal teams');
+    err.name = 'EqualTeams';
+    throw err;
   };
 
   update = async (req: Request, res: Response) => {
