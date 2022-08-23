@@ -17,15 +17,13 @@ export default class TeamController {
   };
 
   create = async (req: Request, res: Response) => {
-    const { homeTeam, awayTeam } = req.body;
+    const checkIfTeamExists = await this.matchService.verifyTeams(req.body);
 
-    if (homeTeam !== awayTeam) {
+    if (checkIfTeamExists) {
       const newMatch = await this.matchService.create(req.body);
       return res.status(StatusCodes.CREATED).json(newMatch);
     }
-    const err = new Error('It is not possible to create a match with two equal teams');
-    err.name = 'EqualTeams';
-    throw err;
+    return res.status(StatusCodes.NOT_FOUND).json({ message: 'There is no team with such id!' });
   };
 
   update = async (req: Request, res: Response) => {

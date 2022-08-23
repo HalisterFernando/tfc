@@ -1,4 +1,5 @@
 import IMatch from '../interfaces/IMatch';
+import ITeam from '../interfaces/ITeam';
 import Match from '../models/match';
 import Team from '../models/team';
 
@@ -15,6 +16,7 @@ export interface IMatchService {
   onGoingMatches(inProgress: boolean): Promise<IMatch[]>
   create(data: TypeMatch): Promise<IMatch>
   update(id: number): Promise<unknown>
+  verifyTeams(data: TypeMatch): Promise<boolean>
 }
 
 export default class MatchService implements IMatchService {
@@ -63,6 +65,11 @@ export default class MatchService implements IMatchService {
     await Match.update({ inProgress: false }, { where: { id } });
   };
 
+  private findTeamById = async (id: number): Promise<ITeam | null> => {
+    const team = Team.findByPk(id);
+    return team;
+  };
+
   async list(): Promise<IMatch[]> {
     const matches = this.getAll();
     return matches;
@@ -81,5 +88,13 @@ export default class MatchService implements IMatchService {
   async update(id: number): Promise<unknown> {
     await this.updateMatch(id);
     return { message: 'Finished' };
+  }
+
+  async verifyTeams(data: TypeMatch): Promise<boolean> {
+    const { homeTeam, awayTeam } = data;
+    const teams = [homeTeam, awayTeam];
+    const checkTeams = await Promise.all(teams.map((team) => this.findTeamById(team)));
+
+    return checkTeams.every((el) => el !== null);
   }
 }
