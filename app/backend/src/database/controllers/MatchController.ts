@@ -26,9 +26,15 @@ export default class TeamController {
     return res.status(StatusCodes.NOT_FOUND).json({ message: 'There is no team with such id!' });
   };
 
+  updateToFinish = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const update = await this.matchService.updateToFinish(Number(id));
+    return res.status(StatusCodes.OK).json(update);
+  };
+
   update = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const update = await this.matchService.update(Number(id));
-    return res.status(StatusCodes.OK).json(update);
+    await this.matchService.update(Number(id), req.body);
+    return res.status(StatusCodes.OK).json({ ...req.body });
   };
 }

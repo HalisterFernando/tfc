@@ -13,6 +13,8 @@ const errorMiddleware: ErrorRequestHandler = (err, _req, res, _next) => {
       return res.status(StatusCodes.UNAUTHORIZED).json({ message });
     case 'JsonWebTokenError':
       return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Token must be a valid token' });
+    case 'MatchIsFinished':
+      return res.status(StatusCodes.BAD_REQUEST).json({ message });
     default:
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message });
   }
