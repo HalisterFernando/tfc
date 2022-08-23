@@ -9,6 +9,6 @@ const matchController = new MatchController(matchService);
 const router = Router();
 
 router.get('/', matchController.list);
-// router.get('/inProgress', matchController.onGoingMatches);
+router.post('/', matchController.create);
 
 export default router;
