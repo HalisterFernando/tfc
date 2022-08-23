@@ -14,6 +14,7 @@ export interface IMatchService {
   list(): Promise<IMatch[]>
   onGoingMatches(inProgress: boolean): Promise<IMatch[]>
   create(data: TypeMatch): Promise<IMatch>
+  update(id: number): Promise<unknown>
 }
 
 export default class MatchService implements IMatchService {
@@ -58,6 +59,10 @@ export default class MatchService implements IMatchService {
     return result;
   };
 
+  private updateMatch = async (id: number): Promise<void> => {
+    await Match.update({ inProgress: false }, { where: { id } });
+  };
+
   async list(): Promise<IMatch[]> {
     const matches = this.getAll();
     return matches;
@@ -71,5 +76,10 @@ export default class MatchService implements IMatchService {
   async create(data: TypeMatch): Promise<IMatch> {
     const newMatch = this.addOnGoingMatch(data);
     return newMatch;
+  }
+
+  async update(id: number): Promise<unknown> {
+    await this.updateMatch(id);
+    return { message: 'Finished' };
   }
 }
