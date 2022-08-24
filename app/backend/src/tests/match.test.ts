@@ -31,6 +31,23 @@ const matchMock = {
       
 }
 
+// const matchMockInProgress = {
+    
+//   "id": 1,
+//   "homeTeam": 16,
+//   "homeTeamGoals": 1,
+//   "awayTeam": 8,
+//   "awayTeamGoals": 1,
+//   "inProgress": Boolean(1),
+//   "teamHome": {
+//     "teamName": "São Paulo"
+//   },
+//   "teamAway": {
+//     "teamName": "Grêmio"
+//   }
+
+// }
+
 describe('/matches', () => {
     beforeEach(() => {
         sinon.stub(Match, 'findAll').resolves([matchMock as unknown as Match])
@@ -42,4 +59,14 @@ describe('/matches', () => {
         const response = await chai.request(app).get('/matches');
         expect(response.status).to.equal(200)
     })
+    // describe('/matches?inProgress', () => {
+    //   beforeEach(() => {
+    //     sinon.stub(Match, 'findAll').resolves([matchMockInProgress as unknown as Match])
+    //   })
+    //   afterEach(() => {
+    //     sinon.restore()
+    //   })
+
+    // })
+
 })
