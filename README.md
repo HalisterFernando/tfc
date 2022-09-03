@@ -6,7 +6,7 @@ Este projeto foi realizado no módulo de **Back-end** da [Trybe](https://www.bet
 ## Descrição :mag_right:
 
 Este projeto é uma API REST para ser utilizada em um site informativo sobre partidas e classificações de futebol!
-O front-end deste projeto foi disponibilizado pela Trybe
+O front-end deste projeto assim como o docker compose foi disponibilizado pela Trybe
 
 ## Tecnologias utilizadas :computer:
 
